@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ec14fddfa2b39bbbebaf43e0fce893dde932dd9c99b2e331b0977f1753055688
-size 341
+import cv2
+import mediapipe as mp
+
+def detect_hand_presence(image_path):
+    mp_hands = mp.solutions.hands
+    hands = mp_hands.Hands(static_image_mode=True)
+
+    image = cv2.imread(image_path)
+    rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    results = hands.process(rgb)
+
+    return results.multi_hand_landmarks is not None
